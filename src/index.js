@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const app = require('./app');
 
-const mongoURL = 'mongodb://localhost:27017/foro-back-equipo2';
+const mongoURL = 'mongodb+srv://admin:123@cluster0-5729m.gcp.mongodb.net/test?retryWrites=true&w=majority';
 const mongoPort = 3000;
 
 // Connecting to the database
