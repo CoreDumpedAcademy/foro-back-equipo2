@@ -5,10 +5,10 @@ function signup(req, res) {
 
   const passwordLength = req.body['password'].length;
   if (passwordLength < 6) {
-    return res.status(400).send({ error: 'Password is too short, it must be between 6 and 128 characters' });
+    return res.status(400).send({ error: 'Password is too short, it must be between 6 and 50 characters' });
   }
-  if (passwordLength > 128) {
-    return res.status(400).send({ error: 'Password is too long, it must be between 6 and 128 characters' });
+  if (passwordLength > 50) {
+    return res.status(400).send({ error: 'Password is too long, it must be between 6 and 50 characters' });
   }
   
   // Save User in the database
