@@ -14,6 +14,5 @@ mongoose.connect(mongoURL, {
     console.log(`Server listening on port: ${mongoPort}`);
   });
 }).catch((err) => {
-  console.log('Could not connect to the database. Exiting now...', err);
-  process.exit();
+  console.log('Could not connect to the database', err);
 });
