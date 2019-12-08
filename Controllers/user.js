@@ -6,7 +6,8 @@ function signup(req, res) {
   const passwordLength = req.body['password'].length;
   if (passwordLength < 6) {
     return res.status(400).send({ error: 'Password is too short, it must be between 6 and 128 characters' });
-  } else if (passwordLength > 128) {
+  }
+  if (passwordLength > 128) {
     return res.status(400).send({ error: 'Password is too long, it must be between 6 and 128 characters' });
   }
   
@@ -14,12 +15,27 @@ function signup(req, res) {
   const user = new User(req.body);
   user.save((err, obj) => {
     if (err) return res.status(400).send({ error: err.message });
-    else return res.status(201).send({ obj });
+    
+    return res.status(201).send({ obj });
   });
 }
 
-function login(req, res) { // ToDo
-  return res.status(200).send(req.body);
+function login(req, res) {
+  const { password } = req.body;
+  const { email } = req.body;
+
+  User.findOne({ email }, (err, user) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).send({ error: 'There was an error processing your request' });
+    }
+    if (!user) return res.status(404).send({ error: 'Email not found' });
+    
+    // TODO compare using bcrypt
+    if (password != user.password) return res.status(404).send({ error: 'Wrong password' });
+    
+    return res.status(200).send({ user });
+  });
 }
 
 module.exports = {
