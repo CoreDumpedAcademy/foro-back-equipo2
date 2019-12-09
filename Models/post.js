@@ -5,7 +5,7 @@ const PostSchema = mongoose.Schema({
     type: Number,
     required: true,
   },
-  userEmail: {
+  username: {
     type: String,
     required: true,
   },
@@ -16,6 +16,13 @@ const PostSchema = mongoose.Schema({
   content: {
     type: String,
     required: true,
+  },
+  creationDate: {
+    type: Date,
+    default: Date.now(),
+  },
+  editDate: {
+    type: Date,
   },
 });
 

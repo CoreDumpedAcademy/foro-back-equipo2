@@ -9,13 +9,20 @@ const CommentSchema = mongoose.Schema({
   parentId: {
     type: Number,
   },
-  userEmail: {
+  username: {
     type: String,
     required: true,
   },
   content: {
     type: String,
     required: true,
+  },
+  creationDate: {
+    type: Date,
+    default: Date.now(),
+  },
+  editDate: {
+    type: Date,
   },
 });
 

@@ -6,13 +6,20 @@ const TopicSchema = mongoose.Schema({
     unique: true,
     required: true,
   },
-  adminEmail: {
+  username: {
     type: String,
     required: true,
   },
   title: {
     type: String,
     required: true,
+  },
+  creationDate: {
+    type: Date,
+    default: Date.now(),
+  },
+  editDate: {
+    type: Date,
   },
 });
 
