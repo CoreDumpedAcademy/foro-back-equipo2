@@ -15,6 +15,9 @@ function signup(req, res) {
   if (passwordLength > 50) {
     return res.status(400).send({ error: 'Password is too long, it must be between 6 and 50 characters' });
   }
+
+  if (!req.body['username']) return res.status(400).send({ error: 'Username needed' });
+  if (req.body.username.includes('@')) return res.status(400).send({ error: "Username cannot contain '@" });
   
   const user = new User(req.body);
   // Hash the password
