@@ -7,8 +7,8 @@ router.post('/create', topicController.create);
 // Returns topic object
 router.get('/:topicId', topicController.getById);
 // Deletes the topic by Id (WIP check for admin rights)
-router.delete('/delete/:topicId', topicController.delete);
+router.delete('/delete/:topicId', topicController.deleteById);
 // Update topic
-router.patch('/edit/:topicId', topicController.edit);
+router.patch('/edit/:topicId', topicController.editById);
 
 module.exports = router;
