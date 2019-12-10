@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const PostSchema = mongoose.Schema({
   topicId: {
-    type: Number,
+    type: String,
     required: true,
   },
   username: {
