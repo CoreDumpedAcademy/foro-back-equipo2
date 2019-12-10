@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
-const PostSchema = mongoose.Schema({
-  topicId: {
+const PMSchema = mongoose.Schema({
+  receiverUsername: {
     type: String,
     required: true,
   },
-  username: {
+  senderUsername: {
     type: String,
     required: true,
   },
@@ -26,4 +26,4 @@ const PostSchema = mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('Post', PostSchema);
+module.exports = mongoose.model('PM', PMSchema);
