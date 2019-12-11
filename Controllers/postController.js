@@ -4,7 +4,7 @@ function createPost(req, res) {
   if (!req.body.content) return res.status(400).send({ error: 'Content needed' });
 
   const post = new Post(req.body);
-
+  // WIP check if the topicId exists
   post.save((err, obj) => {
     if (err) return res.status(400).send({ error: err.message });
     return res.status(201).send({ obj });
@@ -12,7 +12,7 @@ function createPost(req, res) {
 }
 
 function getPost(req, res) {
-  const { postId } = req.params;
+  const postId = req.params['postId'];
 
   Post.findById(postId, (err, post) => {
     if (err) {
@@ -39,7 +39,7 @@ function getUserPosts(req, res) {
 
 function getTopicPosts(req, res) {
   const topicId = { topicId: req.params.topicId };
-
+  
   Post.find(topicId, (err, posts) => {
     if (err) {
       console.log(err);
@@ -51,7 +51,7 @@ function getTopicPosts(req, res) {
 }
 
 function deletePost(req, res) {
-  const { postId } = req.params;
+  const postId = req.params['postId'];
 
   Post.findByIdAndDelete(postId, (err, post) => {
     if (err) return res.status(500).send({ error: err });
@@ -62,7 +62,7 @@ function deletePost(req, res) {
 }
 
 function patchPost(req, res) {
-  const { postId } = req.params;
+  const postId = req.params['postId'];
   const patch = req.body;
 
   Post.findByIdAndUpdate(postId, patch, (err, post) => {
