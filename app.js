@@ -16,6 +16,6 @@ app.use(bodyParser.json());
 
 // Set /user as base url for user
 app.use('/user', user);
-app.use('/', postRoutes);
+app.use('/post', postRoutes);
 
 module.exports = app;
