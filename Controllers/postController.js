@@ -12,7 +12,7 @@ function createPost(req, res) {
 }
 
 function getPost(req, res) {
-  const postId = req.params['postId'];
+  const { postId } = req.params;
 
   Post.findById(postId, (err, post) => {
     if (err) {
@@ -51,7 +51,7 @@ function getTopicPosts(req, res) {
 }
 
 function deletePost(req, res) {
-  const postId = req.params['postId'];
+  const { postId } = req.params;
 
   Post.findByIdAndDelete(postId, (err, post) => {
     if (err) return res.status(500).send({ error: err });
@@ -62,7 +62,7 @@ function deletePost(req, res) {
 }
 
 function patchPost(req, res) {
-  const postId = req.params['postId'];
+  const { postId } = req.params;
   const patch = req.body;
 
   Post.findByIdAndUpdate(postId, patch, (err, post) => {
