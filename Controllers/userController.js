@@ -62,42 +62,38 @@ function login(req, res) {
         return res.status(500).send({ error: 'There was an error processing your request' });
       }
       if (!same) return res.status(404).send({ error: 'Wrong password' });
-     
+
       return res.status(200).send({ userData: user, token: UserServices.createToken(user) });
-    })
+    });
   });
 }
 
-//find the username by username or email.
-function getUser(req, res){
-  
+// find the username by username or email.
+function getUser(req, res) {
   const { data } = req.params;
 
-  User.findOne({ 
-    $or:[
-      {'username': data},
-      {'email': data},
+  User.findOne({
+    $or: [
+      { username: data },
+      { email: data },
     ],
   }, (err, user) => {
-    
     if (user) return res.status(200).send({ user });
-    
+
     return res.status(404).send({ message: 'user not found' });
   });
 }
 
-//get all the users from the database
-function getUsers(req, res){
-
-  User.find( {}, (err, users) => {
-    if (err) return res.status(500).send({err});
+// get all the users from the database
+function getUsers(req, res) {
+  User.find({}, (err, users) => {
+    if (err) return res.status(500).send({ err });
 
     return res.status(200).send({ users });
-
   });
 }
 
-function loginToken(req, res){
+function loginToken(req, res) {
   const { username } = req;
 
   User.findOne(username, (err, data) => {
@@ -114,4 +110,3 @@ module.exports = {
   getUsers,
   loginToken,
 };
-
