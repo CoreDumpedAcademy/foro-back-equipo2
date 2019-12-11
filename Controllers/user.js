@@ -1,11 +1,13 @@
 const bcrypt = require('bcrypt');
 
-const User = require('../Models/user');
+const User = require('../models/user');
+const UserServices = require('../Services/userServices');
 
 // Password hashing
 const saltRounds = 10;
 
 function signup(req, res) {
+
   if (!req.body.password) return res.status(400).send({ error: 'Password needed' });
 
   const passwordLength = req.body.password.length;
@@ -60,13 +62,45 @@ function login(req, res) {
         return res.status(500).send({ error: 'There was an error processing your request' });
       }
       if (!same) return res.status(404).send({ error: 'Wrong password' });
-      // Correcto
-      return res.status(200).send({ user });
-    });
+     
+      return res.status(200).send({ userData: user, token: UserServices.createToken(user) });
+    })
+  });
+}
+
+//find the username by username or email.
+function getUser(req, res){
+  
+  const { data } = req.params;
+
+  User.findOne({ 
+    $or:[
+      {'username': data},
+      {'email': data},
+    ],
+  }, (err, user) => {
+    
+    if (user) return res.status(200).send({ user });
+
+  });
+  return res.status(404).send({ message: 'User not found' });
+}
+
+//get all the users from the database
+function getUsers(req, res){
+
+  User.find( {}, (err, users) => {
+    if (err) return res.status(500).send({err});
+
+    return res.status(200).send({ users });
+
   });
 }
 
 module.exports = {
   signup,
   login,
+  getUser,
+  getUsers,
 };
+
