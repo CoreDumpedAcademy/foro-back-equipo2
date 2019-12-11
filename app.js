@@ -2,8 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 // Import routes
-const user = require('./Routes/user');
+const userRoutes = require('./Routes/userRoutes');
 const postRoutes = require('./Routes/postRoutes');
+const topicRoutes = require('./Routes/topicRoutes');
 
 // Initialize the app
 const app = express();
@@ -22,8 +23,9 @@ app.use((req, res, next) => {
   next();
 });
 
-// Set /user as base url for user
-app.use('/user', user);
+//Base urls
+app.use('/user', userRoutes);
+app.use('/topic', topicRoutes);
 app.use('/post', postRoutes);
 
 module.exports = app;

@@ -1,4 +1,4 @@
-const Post = require('../Models/post');
+const Post = require('../Models/postModel');
 
 function createPost(req, res) {
   if (!req.body.content) return res.status(400).send({ error: 'Content needed' });

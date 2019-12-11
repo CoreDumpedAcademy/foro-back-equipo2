@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 
-const User = require('../models/user');
+const User = require('../Models/userModel');
 const UserServices = require('../Services/userServices');
 
 // Password hashing

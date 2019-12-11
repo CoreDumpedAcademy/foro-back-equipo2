@@ -1,4 +1,12 @@
-const Topic = require('../models/topic');
+const Topic = require('../Models/topicModel');
+
+function getTopics(req, res) {
+  Topic.find({ }, (err, topics) => {
+    if (err) return res.status(500).send({ error: 'There was an error processing your request' });
+
+    return res.status(200).send({ topics });
+  });
+}
 
 function create(req, res) { // WIP Proteger para admin
   if(req.body['editDate']) return res.status(403).send({ error: 'editDate forbidden' });
@@ -52,4 +60,5 @@ module.exports = {
   getById,
   deleteById,
   editById,
+  getTopics,
 }
