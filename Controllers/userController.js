@@ -81,9 +81,9 @@ function getUser(req, res){
   }, (err, user) => {
     
     if (user) return res.status(200).send({ user });
-
+    
+    return res.status(404).send({ message: 'user not found' });
   });
-  return res.status(404).send({ message: 'User not found' });
 }
 
 //get all the users from the database
@@ -97,10 +97,21 @@ function getUsers(req, res){
   });
 }
 
+function loginToken(req, res){
+  const { username } = req;
+
+  User.findOne(username, (err, data) => {
+    if (err) res.status(404).send({ message: 'user not found' });
+
+    return res.status(200).send({ data });
+  });
+}
+
 module.exports = {
   signup,
   login,
   getUser,
   getUsers,
+  loginToken,
 };
 
