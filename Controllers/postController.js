@@ -73,6 +73,16 @@ function patchPost(req, res) {
   });
 }
 
+function postFinder(req, res){
+  const { data } = req.params;
+
+  Post.find(new RegExp('^' + data, 'i'), (err, result) => {
+    if (err) return res.status(404).send({ message: 'Post not found' });
+
+    return res.status(200).send({ result });
+  });
+}
+
 module.exports = {
   createPost,
   getPost,
@@ -80,4 +90,5 @@ module.exports = {
   getTopicPosts,
   deletePost,
   patchPost,
+  postFinder,
 };

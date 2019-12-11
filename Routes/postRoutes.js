@@ -14,5 +14,7 @@ router.get('/topic/:topicId', postRoutes.getTopicPosts);
 router.delete('/delete/:postId', postRoutes.deletePost);
 // Returns post object
 router.patch('/edit/:postId', postRoutes.patchPost);
+// Find any post which have coincidences
+router.get('/find/:data', postRoutes.postFinder);
 
 module.exports = router;
