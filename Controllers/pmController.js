@@ -15,11 +15,17 @@ function sendPM(req, res) {
   });
 }
 
-function getPMs(req, res) {
-  PM.find({}, (err, pms) => {
-    if (err) return res.status(500).send({ err });
+function getUserPMs(req, res) {
+  // get the username that is logged in
+  const currentUser = { receiverUsername: req.params.receiverUsername };
 
-    return res.status(200).send({ pms });
+  PM.find(currentUser, (err, pm) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).send({ error: 'There was an error processing your request' });
+    }
+    if (!pm) return res.status(404).send({ error: 'This user has no PMs.' });
+    return res.status(200).send({ pm });
   });
 }
 
@@ -39,6 +45,6 @@ function getPMsFromUser(req, res) {
 
 module.exports = {
   sendPM,
-  getPMs,
+  getUserPMs,
   getPMsFromUser,
 };
