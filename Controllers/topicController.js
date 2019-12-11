@@ -45,10 +45,11 @@ function deleteById(req, res) { // WIP Proteger para admin
 }
 
 function editById(req, res) {
-  const { topicId } = req.params['topicId'];
+  const topicId = req.params['topicId'];
+  const patch = req.body;
   if (!topicId) return res.status(400).send({ message: 'topicId needed' });
 
-  Topic.findByIdAndUpdate(topicId, (err, topic) => {
+  Topic.findByIdAndUpdate(topicId, patch, (err, topic) => {
     if (err) return res.status(500).send({ error: 'There was an error processing your request' });
     if (!topic) return res.status(404).send({ error: 'Topic not found' });
 
