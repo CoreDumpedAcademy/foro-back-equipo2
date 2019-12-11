@@ -20,7 +20,8 @@ function create(req, res) { // WIP Proteger para admin
 }
 
 function getById(req, res) {
-  const { topicId } = req.params['topicId'];
+  const topicId = req.params['topicId'];
+
   if (!topicId) return res.status(400).send({ message: 'topicId needed' });
 
   Topic.findById(topicId, (err, topic) => {
