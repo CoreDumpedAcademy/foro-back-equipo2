@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const userRoutes = require('./Routes/userRoutes');
 const postRoutes = require('./Routes/postRoutes');
 const topicRoutes = require('./Routes/topicRoutes');
+const commentRoutes = require('./Routes/commentRoutes');
 
 // Initialize the app
 const app = express();
@@ -27,5 +28,6 @@ app.use((req, res, next) => {
 app.use('/user', userRoutes);
 app.use('/topic', topicRoutes);
 app.use('/post', postRoutes);
+app.use('/comment', commentRoutes);
 
 module.exports = app;
