@@ -24,6 +24,7 @@ function getComment(req, res) {
   });
 }
 
+// TO BE TESTED AFTER commentModel fix (username instead of userEmail)
 function getUserComments(req, res) {
   const username = { username: req.params.username };
 
