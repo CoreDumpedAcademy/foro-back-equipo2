@@ -2,7 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 // Import routes
-const user = require('./routes/user');
+const user = require('./Routes/user');
+const postRoutes = require('./Routes/postRoutes');
 
 // Initialize the app
 const app = express();
@@ -15,5 +16,6 @@ app.use(bodyParser.json());
 
 // Set /user as base url for user
 app.use('/user', user);
+app.use('/post', postRoutes);
 
 module.exports = app;
