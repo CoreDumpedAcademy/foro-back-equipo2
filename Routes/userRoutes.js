@@ -10,7 +10,7 @@ router.post('/login', userController.login);
 
 // Return user object if token verification (middleware.isAuth) is correct
 router.route('/loginToken')
-  .get(middleware.isAuth, userController.getUser);
+  .get(middleware.isAuth, userController.loginToken);
 
 router.route('/users')
   .get(userController.getUsers);
