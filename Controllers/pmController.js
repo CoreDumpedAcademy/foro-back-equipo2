@@ -46,5 +46,4 @@ function getPMsFromUser(req, res) {
 module.exports = {
   sendPM,
   getUserPMs,
-  getPMsFromUser,
 };
