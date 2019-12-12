@@ -1,19 +1,20 @@
 const router = require('express').Router();
 
 const postRoutes = require('../Controllers/postController');
+const middleware = require('../Middleware/PostMiddleware');
 
 // Create a new post
-router.post('/new', postRoutes.createPost);
+router.post('/new', middleware.checkTopic, postRoutes.createPost);
 // Returns post object
 router.get('/id/:postId', postRoutes.getPost);
 // Returns user posts
 router.get('/user/:username', postRoutes.getUserPosts);
 // Returns topic posts
 router.get('/topic/:topicId', postRoutes.getTopicPosts);
-// Deletes post
-router.delete('/delete/:postId', postRoutes.deletePost);
-// Returns post object
-router.patch('/edit/:postId', postRoutes.patchPost);
+// Deletes post (username must be sent in body)
+router.delete('/delete/:postId', middleware.checkUser, postRoutes.deletePost);
+// Returns post object (username must be sent in body)
+router.patch('/edit/:postId', middleware.checkUser, postRoutes.patchPost);
 // Find any post which have coincidences
 router.get('/find/:data', postRoutes.postFinder);
 

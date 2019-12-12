@@ -23,6 +23,10 @@ const CommentSchema = mongoose.Schema({
   editDate: {
     type: Date,
   },
+  username: {
+    type: String,
+    require: true,
+  }
 });
 
 module.exports = mongoose.model('Comment', CommentSchema);
