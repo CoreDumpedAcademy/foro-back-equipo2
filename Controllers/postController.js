@@ -77,7 +77,6 @@ function patchPost(req, res) {
 function postFinder(req, res) {
   const { data } = req.params;
 
-<<<<<<< HEAD
   Post.find( {
     $or:[
       { 'content': new RegExp('.*' + data, 'i') },
@@ -86,16 +85,6 @@ function postFinder(req, res) {
     ],
   }, (err , result) => {
     if (result.length == 0) return res.status(404).send({ message: 'Post not found' });
-=======
-  Post.find({
-    $or: [
-      { 'content': new RegExp('^'+ data, 'i') },
-      { 'title': new RegExp('^'+ data, 'i') },
-      { 'username': new RegExp('^'+ data, 'i') },
-    ],
-  }, (err, result) => {
-    if (err) return res.status(404).send({ message: 'Post not found' });
->>>>>>> 93c96d30a5ca160b6958b5c505e4709a5f35a4c5
 
     return res.status(200).send({ result });
   });

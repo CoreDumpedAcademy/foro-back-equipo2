@@ -5,7 +5,7 @@ const topicController = require('../Controllers/topicController');
 // Create a new topic
 router.post('/create', topicController.create);
 // Returns topic object
-router.get('/:topicId', topicController.getById);
+router.get('/id/:topicId', topicController.getById);
 // Returns all topics
 router.get('/all', topicController.getTopics);
 // Update topic
