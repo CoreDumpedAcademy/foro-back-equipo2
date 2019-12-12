@@ -109,13 +109,17 @@ function loginToken(req, res){
 function editUser(req, res){
 
   const { username } = req.params;
-  var body = [];
+  var obj = {};
 
-  for( const obj in req.body) if (obj.length != 0) console.log(obj.value);
+  if (req.body.username) obj.username = req.body.username;
+  if (req.body.email) obj.email = req.body.email;
+  if (req.body.password) obj.email = req.body.email;
+  if (req.body.name) obj.name = req.body.name;
+  if (req.body.surname) obj.name = req.body.surname;
 
-  console.log(body);
+  console.log(obj);
 
-  User.findOneAndUpdate( { 'username': username }, body, (err , update) => {
+  User.findOneAndUpdate( { 'username': username }, obj, (err , update) => {
     if (err) return res.status(404).send({ message: 'User not found' });
 
     return res.status(200).send({ update });
