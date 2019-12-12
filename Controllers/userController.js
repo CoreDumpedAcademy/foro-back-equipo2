@@ -112,8 +112,6 @@ function editUser(req, res){
   if (req.body.name) obj.name = req.body.name;
   if (req.body.surname) obj.name = req.body.surname;
 
-  console.log(obj);
-
   User.findOneAndUpdate( { 'username': username }, obj, (err , update) => {
     if (err) return res.status(404).send({ message: 'User not found' });
 
