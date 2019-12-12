@@ -5,6 +5,10 @@ const TopicSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  description: {
+    type: String,
+    require: true,
+  },
   title: {
     type: String,
     required: true,
