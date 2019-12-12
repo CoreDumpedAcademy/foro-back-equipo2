@@ -1,6 +1,7 @@
 const router = require('express').Router();
 
 const commentController = require('../Controllers/commentController');
+const middleware = require('../Middleware/commentMiddleware');
 
 // Create a new comment
 router.post('/new', commentController.createComment);
@@ -10,9 +11,9 @@ router.get('/id/:commentId', commentController.getComment);
 router.get('/user/:username', commentController.getUserComments);
 // Returns post comments
 router.get('/post/:postId', commentController.getPostComments);
-// Deletes comment
-router.delete('/delete/:commentId', commentController.deleteComment);
-// Returns comment object
-router.patch('/edit/:commentId', commentController.patchComment);
+// Deletes comment (username must be given by body)
+router.delete('/delete/:commentId', middleware.checkUser, commentController.deleteComment);
+// Returns comment object (username must be given by body)
+router.patch('/edit/:commentId', middleware.checkUser, commentController.patchComment);
 
 module.exports = router;
