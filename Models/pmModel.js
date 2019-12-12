@@ -21,9 +21,6 @@ const PMSchema = mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
-  editDate: {
-    type: Date,
-  },
 });
 
 module.exports = mongoose.model('PM', PMSchema);

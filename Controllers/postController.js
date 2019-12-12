@@ -39,7 +39,7 @@ function getUserPosts(req, res) {
 
 function getTopicPosts(req, res) {
   const topicId = { topicId: req.params.topicId };
-  
+
   Post.find(topicId, (err, posts) => {
     if (err) {
       console.log(err);
@@ -64,6 +64,7 @@ function deletePost(req, res) {
 function patchPost(req, res) {
   const { postId } = req.params;
   const patch = req.body;
+  patch.editDate = Date.now();
 
   Post.findByIdAndUpdate(postId, patch, (err, post) => {
     if (err) return res.status(500).send({ error: err });
@@ -73,9 +74,9 @@ function patchPost(req, res) {
   });
 }
 
-function postFinder(req, res){
+function postFinder(req, res) {
   const { data } = req.params;
-
+  
   Post.find( {
     $or:[
       { 'content': new RegExp('.*' + data, 'i') },
@@ -84,7 +85,7 @@ function postFinder(req, res){
     ],
   }, (err , result) => {
     if (result.length == 0) return res.status(404).send({ message: 'Post not found' });
-
+    
     return res.status(200).send({ result });
   });
 }
