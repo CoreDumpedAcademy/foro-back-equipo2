@@ -21,6 +21,10 @@ const UserSchema = mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
+  admin: {
+    type: Number,
+    // 0 if regular user or 1 for admin access
+  },
 });
 
 module.exports = mongoose.model('User', UserSchema);
