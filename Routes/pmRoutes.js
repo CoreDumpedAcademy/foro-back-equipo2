@@ -5,6 +5,6 @@ const pmController = require('../Controllers/pmController');
 // Send PM
 router.post('/pm/send', pmController.sendPM);
 // Get all PMs for a user
-router.get('/pm', pmController.getPMs);
+router.get('/pm', pmController.getUserPMs);
 
 module.exports = router;
