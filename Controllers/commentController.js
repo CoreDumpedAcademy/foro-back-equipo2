@@ -65,6 +65,7 @@ function deleteComment(req, res) {
 function patchComment(req, res) {
   const { commentId } = req.params;
   const patch = req.body;
+  patch.editDate = Date.now();
 
   Comment.findByIdAndUpdate(commentId, patch, (err, comment) => {
     if (err) return res.status(500).send({ error: err });
