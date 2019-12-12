@@ -77,8 +77,11 @@ function getUser(req, res) {
       { username: data },
       { email: data },
     ],
-  }, (err, user) => {
-    if (user) return res.status(200).send({ user });
+  }, '-password', (err, user) => {
+    if (user) {
+     
+      return res.status(200).send({ user });
+    }
 
     return res.status(404).send({ message: 'user not found' });
   });
@@ -86,7 +89,7 @@ function getUser(req, res) {
 
 // get all the users from the database
 function getUsers(req, res) {
-  User.find({}, (err, users) => {
+  User.find({}, '-password', (err, users) => {
     if (err) return res.status(500).send({ err });
 
     return res.status(200).send({ users });
@@ -94,9 +97,9 @@ function getUsers(req, res) {
 }
 
 function loginToken(req, res){
-  User.findOne( { 'username': res.locals.username } , (err, data) => {
+  User.findOne( { 'username': res.locals.username }, '-password', (err, data) => {
     if (err) return res.status(404).send({ message: 'user not found', err });
-
+    
     return res.status(200).send({ data });
   });
 }
@@ -113,7 +116,10 @@ function editUser(req, res){
   if (req.body.surname) obj.name = req.body.surname;
 
   User.findOneAndUpdate( { 'username': username }, obj, (err , update) => {
-    if (err) return res.status(404).send({ message: 'User not found' });
+    if (err || update == null) return res.status(404).send({ message: 'User not found' });
+
+    update = update.toObject();
+    delete update.password;
 
     return res.status(200).send({ update });
   });

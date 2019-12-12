@@ -76,6 +76,7 @@ function patchPost(req, res) {
 
 function postFinder(req, res) {
   const { data } = req.params;
+  Post.createIndexes({ 'content': 1 })
 
   Post.find( {
     $or:[
