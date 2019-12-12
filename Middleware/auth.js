@@ -7,10 +7,10 @@ function isAuth(req, res, next){
 
   if(!token) return res.status(404).send({ message: 'token is missing' });
   
-  jwt.verify(token, "contraseña", (err, decodedToken) => {
+  jwt.verify(token, "contraseña",  { complete: true }, (err, decodedToken) => {
     if(err) return res.status(403).send({ message: 'access forbiden, invalid token'});
-
-    res.username = decodedToken.Username;
+    
+    res.locals.username = decodedToken.payload.Username;
   });
 
   next();

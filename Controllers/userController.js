@@ -98,10 +98,9 @@ function getUsers(req, res){
 }
 
 function loginToken(req, res){
-  const { username } = req;
 
-  User.findOne(username, (err, data) => {
-    if (err) res.status(404).send({ message: 'user not found' });
+  User.findOne( { 'username': res.locals.username } , (err, data) => {
+    if (err) return res.status(404).send({ message: 'user not found', err });
 
     return res.status(200).send({ data });
   });
