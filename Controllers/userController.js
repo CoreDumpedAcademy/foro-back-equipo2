@@ -101,10 +101,29 @@ function loginToken(req, res){
   });
 }
 
+function editUser(req, res){
+
+  const { username } = req.params;
+  var obj = {};
+
+  if (req.body.username) obj.username = req.body.username;
+  if (req.body.email) obj.email = req.body.email;
+  if (req.body.password) obj.email = req.body.email;
+  if (req.body.name) obj.name = req.body.name;
+  if (req.body.surname) obj.name = req.body.surname;
+
+  User.findOneAndUpdate( { 'username': username }, obj, (err , update) => {
+    if (err) return res.status(404).send({ message: 'User not found' });
+
+    return res.status(200).send({ update });
+  });
+}
+
 module.exports = {
   signup,
   login,
   getUser,
   getUsers,
   loginToken,
+  editUser,
 };

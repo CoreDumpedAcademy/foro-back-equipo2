@@ -11,11 +11,13 @@ router.post('/login', userController.login);
 // Return user object if token verification (middleware.isAuth) is correct
 router.route('/loginToken')
   .get(middleware.isAuth, userController.loginToken);
-
+// Return all the users from the database
 router.route('/users')
   .get(userController.getUsers);
-
+//Return one user by username or email
 router.route('/user/:data')
   .get(userController.getUser);
+//Edit any username field by username as param
+router.patch('/editUser/:username', userController.editUser);
 
 module.exports = router;
