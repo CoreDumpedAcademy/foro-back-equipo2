@@ -5,7 +5,7 @@ const commentController = require('../Controllers/commentController');
 // Create a new comment
 router.post('/new', commentController.createComment);
 // Returns comment object
-router.get('/:commentId', commentController.getComment);
+router.get('/id/:commentId', commentController.getComment);
 // Returns user comments
 router.get('/user/:username', commentController.getUserComments);
 // Returns post comments

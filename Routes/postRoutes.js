@@ -5,7 +5,7 @@ const postRoutes = require('../Controllers/postController');
 // Create a new post
 router.post('/new', postRoutes.createPost);
 // Returns post object
-router.get('/:postId', postRoutes.getPost);
+router.get('/id/:postId', postRoutes.getPost);
 // Returns user posts
 router.get('/user/:username', postRoutes.getUserPosts);
 // Returns topic posts
