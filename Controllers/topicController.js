@@ -47,6 +47,8 @@ function deleteById(req, res) { // WIP Proteger para admin
 function editById(req, res) {
   const topicId = req.params['topicId'];
   const patch = req.body;
+  patch.editDate = Date.now();
+
   if (!topicId) return res.status(400).send({ message: 'topicId needed' });
 
   Topic.findByIdAndUpdate(topicId, patch, (err, topic) => {
@@ -63,4 +65,4 @@ module.exports = {
   deleteById,
   editById,
   getTopics,
-}
+};
