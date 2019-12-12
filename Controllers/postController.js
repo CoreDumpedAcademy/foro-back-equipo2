@@ -83,7 +83,7 @@ function postFinder(req, res){
       { 'username': new RegExp('^'+ data, 'i') },
     ]
   }, (err , result) => {
-    if (err) return res.status(404).send({ message: 'Post not found' });
+    if (result.length == 0) return res.status(404).send({ message: 'Post not found' });
 
     return res.status(200).send({ result });
   });

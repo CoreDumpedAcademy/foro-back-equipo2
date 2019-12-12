@@ -106,11 +106,28 @@ function loginToken(req, res){
   });
 }
 
+function editUser(req, res){
+
+  const { username } = req.params;
+  var body = [];
+
+  for( const obj in req.body) if (obj.length != 0) console.log(obj.value);
+
+  console.log(body);
+
+  User.findOneAndUpdate( { 'username': username }, body, (err , update) => {
+    if (err) return res.status(404).send({ message: 'User not found' });
+
+    return res.status(200).send({ update });
+  });
+}
+
 module.exports = {
   signup,
   login,
   getUser,
   getUsers,
   loginToken,
+  editUser,
 };
 
