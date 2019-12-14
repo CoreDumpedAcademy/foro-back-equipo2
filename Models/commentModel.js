@@ -16,6 +16,19 @@ const CommentSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  upvoters: {
+    type: [String], 
+  },
+  downvoters: {
+    type: [String],
+  },
+  rating: {
+    type: Number,
+    default: 0,
+  },
+  voteType: {
+    type: String,
+  },
   creationDate: {
     type: Date,
     default: Date.now(),

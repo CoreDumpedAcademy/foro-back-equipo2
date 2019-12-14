@@ -5,6 +5,8 @@ const middleware = require('../Middleware/commentMiddleware');
 
 // Create a new comment
 router.post('/new', commentController.createComment);
+// Rates a comment
+router.post('/vote/:commentId', commentController.rateComment);
 // Returns comment object
 router.get('/id/:commentId', commentController.getComment);
 // Returns user comments

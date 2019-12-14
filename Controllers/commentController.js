@@ -62,6 +62,81 @@ function deleteComment(req, res) {
   });
 }
 
+function rateComment(req, res) {
+  const commentId = req.params.commentId;
+  const request = req.body;
+  var rating = 0;
+  var totalUpvoters;
+  var totalDownvoters;
+  var voterType = null;
+
+  if (request["voteType"]  == "") {
+    Comment.findByIdAndUpdate(commentId, {
+      $pull: {
+        "upvoters": request["username"],
+        "downvoters": request["username"],
+      }
+    }, {new: true}, (err, response) => {
+      if (err) return res.status(500).send({ error: err });
+      totalUpvoters = response.upvoters.length;
+      totalDownvoters = response.downvoters.length;
+      rating = totalUpvoters - totalDownvoters;
+      Comment.findByIdAndUpdate(commentId, {
+        $set: {
+          "rating": rating,
+        },
+       }, {new: true}, (err, response) => {
+        if (err) return res.status(500).send({ error: err });
+        return res.status(200).send({ response });
+    });
+    });
+  }
+  // If user is in downvoters list, remove and add to the upvoters
+  if (request["voteType"] == "up") {
+    voterType = "upvoters";
+    Comment.findByIdAndUpdate(commentId, {
+      $pull: {
+        "downvoters": request["username"],
+      }, 
+    }, {new: true}, (err, response) => {
+      if (err) return res.status(500).send({ error: err });
+    });
+  }
+  // If user is in upvoters list, remove and add to the downvoters
+  else if (request.voteType == "down") {
+    voterType = "downvoters";
+    Comment.findByIdAndUpdate(commentId, {
+      $pull: {
+        "upvoters": request["username"],
+      },
+    }, {new: true}, (err, response) => {
+      if (err) return res.status(500).send({ error: err });
+    });
+  }
+  // At the end, we use the counterInc and the voterType to make the changes
+  if (request.voteType !== "") {
+    Comment.findByIdAndUpdate(commentId, {
+      $addToSet: {
+        [voterType]: request["username"],
+      },
+    }, {new: true}, (err, response) => {
+      if (err) return res.status(500).send({ error: err });
+      totalUpvoters = response.upvoters.length;
+      totalDownvoters = response.downvoters.length;
+      rating = totalUpvoters - totalDownvoters;
+      Comment.findByIdAndUpdate(commentId, {
+        $set: {
+          "rating": rating,
+        },
+       }, {new: true}, (err, response) => {
+        if (err) return res.status(500).send({ error: err });
+        return res.status(200).send({ response });
+    });
+  });
+}
+    
+}
+
 function patchComment(req, res) {
   const { commentId } = req.params;
   const patch = req.body;
@@ -76,6 +151,7 @@ function patchComment(req, res) {
 }
 
 module.exports = {
+  rateComment,
   createComment,
   getComment,
   getUserComments,
