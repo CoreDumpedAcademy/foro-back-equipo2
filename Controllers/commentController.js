@@ -27,7 +27,7 @@ function getComment(req, res) {
 function getUserComments(req, res) {
   const { usernameId } = req.params;
 
-  Comment.find(usernameId, (err, comments) => {
+  Comment.find({ 'usernameId':usernameId }, (err, comments) => {
     if (err) {
       console.log(err);
       return res.status(500).send({ error: 'There was an error processing your request' });
@@ -40,7 +40,7 @@ function getUserComments(req, res) {
 function getPostComments(req, res) {
   const  { postId } = req.params;
 
-  Comment.find(postId, (err, comments) => {
+  Comment.find({ 'postId':postId }, (err, comments) => {
     if (err) {
       console.log(err);
       return res.status(500).send({ error: 'There was an error processing your request' });
