@@ -10,12 +10,12 @@ router.post('/vote/:commentId', commentController.rateComment);
 // Returns comment object
 router.get('/id/:commentId', commentController.getComment);
 // Returns user comments
-router.get('/user/:username', commentController.getUserComments);
+router.get('/user/:usernameId', commentController.getUserComments);
 // Returns post comments
 router.get('/post/:postId', commentController.getPostComments);
-// Deletes comment (username must be given by body)
+// Deletes comment (usernameId must be given by body)
 router.delete('/delete/:commentId', middleware.checkUser, commentController.deleteComment);
-// Returns comment object (username must be given by body)
+// Returns comment object (usernameId must be given by body)
 router.patch('/edit/:commentId', middleware.checkUser, commentController.patchComment);
 
 module.exports = router;

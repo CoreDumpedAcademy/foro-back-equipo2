@@ -24,11 +24,10 @@ function getComment(req, res) {
   });
 }
 
-// TO BE TESTED AFTER commentModel fix (username instead of userEmail)
 function getUserComments(req, res) {
-  const username = { username: req.params.username };
+  const { usernameId } = req.params;
 
-  Comment.find(username, (err, comments) => {
+  Comment.find(usernameId, (err, comments) => {
     if (err) {
       console.log(err);
       return res.status(500).send({ error: 'There was an error processing your request' });
@@ -39,7 +38,7 @@ function getUserComments(req, res) {
 }
 
 function getPostComments(req, res) {
-  const postId = { postId: req.params.postId };
+  const  { postId } = req.params;
 
   Comment.find(postId, (err, comments) => {
     if (err) {
@@ -73,8 +72,8 @@ function rateComment(req, res) {
   if (request["voteType"]  == "") {
     Comment.findByIdAndUpdate(commentId, {
       $pull: {
-        "upvoters": request["username"],
-        "downvoters": request["username"],
+        "upvoters": request["usernameId"],
+        "downvoters": request["usernameId"],
       }
     }, {new: true}, (err, response) => {
       if (err) return res.status(500).send({ error: err });
@@ -96,7 +95,7 @@ function rateComment(req, res) {
     voterType = "upvoters";
     Comment.findByIdAndUpdate(commentId, {
       $pull: {
-        "downvoters": request["username"],
+        "downvoters": request["usernameId"],
       }, 
     }, {new: true}, (err, response) => {
       if (err) return res.status(500).send({ error: err });
@@ -107,7 +106,7 @@ function rateComment(req, res) {
     voterType = "downvoters";
     Comment.findByIdAndUpdate(commentId, {
       $pull: {
-        "upvoters": request["username"],
+        "upvoters": request["usernameId"],
       },
     }, {new: true}, (err, response) => {
       if (err) return res.status(500).send({ error: err });
@@ -117,7 +116,7 @@ function rateComment(req, res) {
   if (request.voteType !== "") {
     Comment.findByIdAndUpdate(commentId, {
       $addToSet: {
-        [voterType]: request["username"],
+        [voterType]: request["usernameId"],
       },
     }, {new: true}, (err, response) => {
       if (err) return res.status(500).send({ error: err });

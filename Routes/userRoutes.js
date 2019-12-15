@@ -17,7 +17,7 @@ router.route('/users')
 //Return one user by username or email
 router.route('/user/:data')
   .get(userController.getUser);
-//Edit any username field by username as param
+//Edit any username field by username as params
 router.patch('/editUser/:username', userController.editUser);
 
 module.exports = router;

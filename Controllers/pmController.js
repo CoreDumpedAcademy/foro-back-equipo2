@@ -3,7 +3,7 @@ const PM = require('../Models/pmModel');
 function sendPM(req, res) {
   // senderUsername must be taken from token
   // still needs to check if receiverUsername exists
-  if (!req.body.receiverUsername) return res.status(400).send({ error: 'Recipient needed' });
+  if (!req.body.receiverUsernameId) return res.status(400).send({ error: 'Recipient needed' });
   if (!req.body.title) return res.status(400).send({ error: 'Title needed' });
   if (!req.body.content) return res.status(400).send({ error: 'Content needed' });
 
@@ -17,9 +17,9 @@ function sendPM(req, res) {
 
 function getUserPMs(req, res) {
   // get the username that is logged in
-  const currentUser = { receiverUsername: req.params.receiverUsername };
+  const currentUser =  req.params.usernameId;
 
-  PM.find(currentUser, (err, pm) => {
+  PM.find({ 'receiverUsernameId': currentUser }, (err, pm) => {
     if (err) {
       console.log(err);
       return res.status(500).send({ error: 'There was an error processing your request' });

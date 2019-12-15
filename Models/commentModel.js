@@ -8,10 +8,6 @@ const CommentSchema = mongoose.Schema({
   parentId: {
     type: String,
   },
-  userEmail: {
-    type: String,
-    required: true,
-  },
   content: {
     type: String,
     required: true,
@@ -36,7 +32,7 @@ const CommentSchema = mongoose.Schema({
   editDate: {
     type: Date,
   },
-  username: {
+  usernameId: {
     type: String,
     require: true,
   }
