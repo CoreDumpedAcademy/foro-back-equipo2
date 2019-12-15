@@ -8,12 +8,12 @@ router.post('/new', middleware.checkTopic, postRoutes.createPost);
 // Returns post object
 router.get('/id/:postId', postRoutes.getPost);
 // Returns user posts
-router.get('/user/:username', postRoutes.getUserPosts);
+router.get('/user/:usernameId', postRoutes.getUserPosts);
 // Returns topic posts
 router.get('/topic/:topicId', postRoutes.getTopicPosts);
-// Deletes post (username must be sent in body)
+// Deletes post (usernameId must be sent in body)
 router.delete('/delete/:postId', middleware.checkUser, postRoutes.deletePost);
-// Returns post object (username must be sent in body)
+// Returns post object (usernameId must be sent in body)
 router.patch('/edit/:postId', middleware.checkUser, postRoutes.patchPost);
 // Find any post which have coincidences
 router.get('/find/:data', postRoutes.postFinder);

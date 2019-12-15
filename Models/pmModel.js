@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
 const PMSchema = mongoose.Schema({
-  receiverUsername: {
+  receiverUsernameId: {
     type: String,
     required: true,
   },
-  senderUsername: {
+  senderUsernameId: {
     type: String,
     required: true,
   },

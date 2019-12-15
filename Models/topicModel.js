@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const TopicSchema = mongoose.Schema({
-  username: {
+  usernameId: {
     type: String,
     required: true,
   },

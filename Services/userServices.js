@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 function createToken(user) {
   const payload = {
     Username: user.username,
+    id: user._id,
   };
 
   return jwt.sign(payload, 'contraseña', { expiresIn: 60 * 60 * 24 * 14 });

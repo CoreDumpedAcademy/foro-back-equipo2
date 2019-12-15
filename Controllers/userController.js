@@ -79,7 +79,8 @@ function getUser(req, res) {
     ],
   }, '-password', (err, user) => {
     if (user) {
-     
+      
+      console.log(user._id);
       return res.status(200).send({ user });
     }
 

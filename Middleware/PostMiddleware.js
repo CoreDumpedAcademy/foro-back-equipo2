@@ -1,5 +1,6 @@
 const Topic = require('../Models/topicModel');
 const Post = require('../Models/postModel');
+const Auth = require('../Middleware/auth');
 
 function checkTopic(req, res, next){
     Topic.findById(req.body.topicId, (err) => {
@@ -11,8 +12,8 @@ function checkTopic(req, res, next){
 
 function checkUser(req, res, next){
     Post.findById(req.params.postId, (err, post) => {
-        if (err) return res.status(404).send({ message: 'Post Id not found' });
-        if (post.username != req.body.username) return res.status(401).send({ message: 'User not allowed to delete the post' });
+        if (err) return res.status(404).send({ message: 'Post not found' });
+        if (post.usernameId != req.body.usernameId) return Auth.checkAdmin(req, res, next);
 
         next();
     });

@@ -25,9 +25,9 @@ function getPost(req, res) {
 }
 
 function getUserPosts(req, res) {
-  const username = { username: req.params.username };
+  const { usernameId } = req.params;
 
-  Post.find(username, (err, posts) => {
+  Post.find(usernameId, (err, posts) => {
     if (err) {
       console.log(err);
       return res.status(500).send({ error: 'There was an error processing your request' });
@@ -38,7 +38,7 @@ function getUserPosts(req, res) {
 }
 
 function getTopicPosts(req, res) {
-  const topicId = { topicId: req.params.topicId };
+  const { topicId } = req.params;
 
   Post.find(topicId, (err, posts) => {
     if (err) {
