@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 
-
 // Generate a token with the username which expires in 14 days (seconds*minutes*hours*days)
 function createToken(user) {
   const payload = {
