@@ -126,6 +126,17 @@ function editUser(req, res){
   });
 }
 
+function getUsername(req, res){
+  const { usernameId } = req.params;
+
+  User.findById(usernameId, {username: 1}, (err, user) => {
+    if (err) return res.status(500).send({ err });
+    if(!user) return res.status(404).send({ message: 'User not found' });
+
+    return res.status(200).send({ username: user.username });
+  });
+}
+
 module.exports = {
   signup,
   login,
@@ -133,4 +144,5 @@ module.exports = {
   getUsers,
   loginToken,
   editUser,
+  getUsername,
 };

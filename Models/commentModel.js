@@ -35,7 +35,7 @@ const CommentSchema = mongoose.Schema({
   usernameId: {
     type: String,
     require: true,
-  }
+  },
 });
 
 module.exports = mongoose.model('Comment', CommentSchema);

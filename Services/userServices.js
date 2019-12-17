@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-
+const User = require('../Models/userModel');
 
 // Generate a token with the username which expires in 14 days (seconds*minutes*hours*days)
 function createToken(user) {

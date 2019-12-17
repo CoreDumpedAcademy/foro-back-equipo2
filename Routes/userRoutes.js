@@ -20,4 +20,6 @@ router.route('/user/:data')
 //Edit any username field by username as params
 router.patch('/editUser/:username', userController.editUser);
 
+router.get('/username/:usernameId', userController.getUsername);
+
 module.exports = router;
