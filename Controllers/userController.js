@@ -112,7 +112,7 @@ function editUser(req, res){
 
   if (req.body.username) obj.username = req.body.username;
   if (req.body.email) obj.email = req.body.email;
-  if (req.body.password) obj.email = req.body.email;
+  if (req.body.password) obj.email = req.body.password;
   if (req.body.name) obj.name = req.body.name;
   if (req.body.surname) obj.name = req.body.surname;
 
