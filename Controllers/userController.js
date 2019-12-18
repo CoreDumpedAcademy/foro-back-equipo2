@@ -112,7 +112,10 @@ function editUser(req, res){
 
   if (req.body.username) obj.username = req.body.username;
   if (req.body.email) obj.email = req.body.email;
-  if (req.body.password) obj.email = req.body.email;
+  if (req.body.password) bcrypt.hash(req.body.password, 10, (err, hashed) => {
+    if (err) return res.status(500).send( {message: err });
+    obj.password = hashed;
+  });
   if (req.body.name) obj.name = req.body.name;
   if (req.body.surname) obj.name = req.body.surname;
 
