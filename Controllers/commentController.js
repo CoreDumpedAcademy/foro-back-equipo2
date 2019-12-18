@@ -26,8 +26,16 @@ function getComment(req, res) {
 
 function getUserComments(req, res) {
   const { usernameId } = req.params;
+  var pageNo = parseInt(req.query.pageNo);
+  var size = parseInt(req.query.size);
+  var query = {};
 
-  Comment.find({ 'usernameId':usernameId }, (err, comments) => {
+  if (pageNo < 0 || pageNo === 0) return res.send({ err: "Invalid page number" }); 
+
+  query.skip = size * (pageNo - 1);
+  query.limit = size;
+
+  Comment.find({ 'usernameId':usernameId }, {}, query, (err, comments) => {
     if (err) {
       console.log(err);
       return res.status(500).send({ error: 'There was an error processing your request' });
@@ -39,8 +47,16 @@ function getUserComments(req, res) {
 
 function getPostComments(req, res) {
   const  { postId } = req.params;
+  var pageNo = parseInt(req.query.pageNo);
+  var size = parseInt(req.query.size);
+  var query = {};
 
-  Comment.find({ 'postId':postId }, (err, comments) => {
+  if (pageNo < 0 || pageNo === 0) return res.send({ err: "Invalid page number" }); 
+
+  query.skip = size * (pageNo - 1);
+  query.limit = size;
+
+  Comment.find({ 'postId':postId }, {}, query, (err, comments) => {
     if (err) {
       console.log(err);
       return res.status(500).send({ error: 'There was an error processing your request' });

@@ -1,7 +1,16 @@
 const Topic = require('../Models/topicModel');
 
 function getTopics(req, res) {
-  Topic.find({ }, (err, topics) => {
+  var pageNo = parseInt(req.query.pageNo);
+  var size = parseInt(req.query.size);
+  var query = {};
+
+  if (pageNo < 0 || pageNo === 0) return res.send({ err: "Invalid page number" }); 
+
+  query.skip = size * (pageNo - 1);
+  query.limit = size;
+
+  Topic.find({ }, { }, query, (err, topics) => {
     if (err) return res.status(500).send({ error: 'There was an error processing your request' });
 
     return res.status(200).send({ topics });
