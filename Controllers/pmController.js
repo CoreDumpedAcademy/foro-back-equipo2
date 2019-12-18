@@ -29,7 +29,23 @@ function getUserPMs(req, res) {
   });
 }
 
+function getUserPMsSent(req, res) {
+  // get the username that is logged in
+  const currentUser =  req.params.usernameId;
+
+  PM.find({ 'senderUsernameId': currentUser }, (err, pm) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).send({ error: 'There was an error processing your request' });
+    }
+    if (!pm) return res.status(404).send({ error: 'This user hasn´t sent any PMs.' });
+    return res.status(200).send({ pm });
+  });
+}
+
+
 module.exports = {
   sendPM,
   getUserPMs,
+  getUserPMsSent
 };
