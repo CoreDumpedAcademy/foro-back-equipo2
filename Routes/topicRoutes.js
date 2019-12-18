@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 const topicController = require('../Controllers/topicController');
-const middleware = require('../Middleware/Auth');
+const middleware = require('../Middleware/auth');
 
 // Create a new topic (username id must be given by body)
 router.post('/create', middleware.checkAdmin, topicController.create);
