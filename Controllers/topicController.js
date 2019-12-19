@@ -1,7 +1,8 @@
 const Topic = require('../Models/topicModel');
+const deleteService = require('../Services/deleteService');
 
 function getTopics(req, res) {
-  Topic.find({ }, (err, topics) => {
+  Topic.find({ logicalDelete: false }, (err, topics) => {
     if (err) return res.status(500).send({ error: 'There was an error processing your request' });
 
     return res.status(200).send({ topics });
@@ -24,7 +25,7 @@ function getById(req, res) {
 
   if (!topicId) return res.status(400).send({ message: 'topicId needed' });
 
-  Topic.findById(topicId, (err, topic) => {
+  Topic.findById(topicId, { logicalDelete: false }, (err, topic) => {
     if (err) return res.status(500).send({ error: 'There was an error processing your request' });
     if (!topic) return res.status(404).send({ error: 'Topic not found' });
 
@@ -36,9 +37,11 @@ function deleteById(req, res) { // WIP Proteger para admin
   const topicId = req.params['topicId'];
   if (!topicId) return res.status(400).send({ message: 'topicId needed' });
 
-  Topic.findByIdAndDelete(topicId, (err, topic) => {
+  Topic.findByIdAndUpdate(topicId, { logicalDelete: false }, (err, topic) => {
     if (err) return res.status(500).send({ error: 'There was an error processing your request' });
     if (!topic) return res.status(404).send({ error: 'Topic not found' });
+
+    if (deleteService.deleteAllPosts(topicId) == false) return res.status(500).send( { message: 'Internal error' });
 
     return res.status(200).send({ topic });
   });
@@ -51,7 +54,7 @@ function editById(req, res) {
 
   if (!topicId) return res.status(400).send({ message: 'topicId needed' });
 
-  Topic.findByIdAndUpdate(topicId, patch, (err, topic) => {
+  Topic.findByIdAndUpdate(topicId, patch, { logicalDelete: false }, (err, topic) => {
     if (err) return res.status(500).send({ error: 'There was an error processing your request' });
     if (!topic) return res.status(404).send({ error: 'Topic not found' });
 

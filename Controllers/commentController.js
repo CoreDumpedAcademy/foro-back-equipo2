@@ -14,7 +14,7 @@ function createComment(req, res) {
 function getComment(req, res) {
   const { commentId } = req.params;
 
-  Comment.findById(commentId, (err, comment) => {
+  Comment.findById(commentId, {logicalDelete: false}, (err, comment) => {
     if (err) {
       console.log(err);
       return res.status(500).send({ error: 'There was an error processing your request' });
@@ -27,7 +27,7 @@ function getComment(req, res) {
 function getUserComments(req, res) {
   const { usernameId } = req.params;
 
-  Comment.find({ 'usernameId':usernameId }, (err, comments) => {
+  Comment.find({ 'usernameId':usernameId, logicalDelete: false }, (err, comments) => {
     if (err) {
       console.log(err);
       return res.status(500).send({ error: 'There was an error processing your request' });
@@ -40,7 +40,7 @@ function getUserComments(req, res) {
 function getPostComments(req, res) {
   const  { postId } = req.params;
 
-  Comment.find({ 'postId':postId }, (err, comments) => {
+  Comment.find({ 'postId':postId, logicalDelete: false }, (err, comments) => {
     if (err) {
       console.log(err);
       return res.status(500).send({ error: 'There was an error processing your request' });
@@ -53,7 +53,7 @@ function getPostComments(req, res) {
 function deleteComment(req, res) {
   const { commentId } = req.params;
 
-  Comment.findByIdAndDelete(commentId, (err, comment) => {
+  Comment.findByIdAndUpdate(commentId, {logicalDelete: true}, (err, comment) => {
     if (err) return res.status(500).send({ error: err });
     if (!comment) return res.status(404).send({ error: 'Comment not found' });
 

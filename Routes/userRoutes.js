@@ -22,4 +22,6 @@ router.patch('/editUser/:username', userController.editUser);
 
 router.get('/username/:usernameId', userController.getUsername);
 
+router.delete('/delete/:usernameId', userController.deleteUsername);
+
 module.exports = router;

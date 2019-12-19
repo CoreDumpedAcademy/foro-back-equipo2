@@ -16,7 +16,7 @@ function saveInstaMessage(req, res) {
   function getUserInstantMessages(req, res) {
     const currentUser =  req.params.usernameId;
   
-    InstaMessage.find({ 'receiverUsernameId': currentUser }, (err, instaMessage) => {
+    InstaMessage.find({ 'receiverUsernameId': currentUser, logicalDelete: false }, (err, instaMessage) => {
       if (err) {
         console.log(err);
         return res.status(500).send({ error: 'There was an error processing your request' });
@@ -30,7 +30,7 @@ function saveInstaMessage(req, res) {
     // get the username that is logged in
     const currentUser =  req.params.usernameId;
   
-    InstaMessage.find({ 'senderUsernameId': currentUser }, (err, instaMessage) => {
+    InstaMessage.find({ 'senderUsernameId': currentUser, logicalDelete: false }, (err, instaMessage) => {
       if (err) {
         console.log(err);
         return res.status(500).send({ error: 'There was an error processing your request' });

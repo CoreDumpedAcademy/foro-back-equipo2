@@ -1,4 +1,5 @@
 const Post = require('../Models/postModel');
+const deleteService = require('../Services/deleteService');
 
 function createPost(req, res) {
   if (!req.body.content) return res.status(400).send({ error: 'Content needed' });
@@ -53,9 +54,11 @@ function getTopicPosts(req, res) {
 function deletePost(req, res) {
   const { postId } = req.params;
 
-  Post.findByIdAndDelete(postId, (err, post) => {
+  Post.findByIdAndUpdate(postId, { logicalDelete: true }, (err, post) => {
     if (err) return res.status(500).send({ error: err });
     if (!post) return res.status(404).send({ error: 'Post not found' });
+
+    if (deleteService.deleteAllComments(postId) == false) return res.status(500).send({ message: 'Internal error'});
 
     return res.status(200).send({ message: 'Post Deleted', post });
   });

@@ -19,7 +19,7 @@ function getUserPMs(req, res) {
   // get the username that is logged in
   const currentUser =  req.params.usernameId;
 
-  PM.find({ 'receiverUsernameId': currentUser }, (err, pm) => {
+  PM.find({ 'receiverUsernameId': currentUser, logicalDelete: false }, (err, pm) => {
     if (err) {
       console.log(err);
       return res.status(500).send({ error: 'There was an error processing your request' });
@@ -33,7 +33,7 @@ function getUserPMsSent(req, res) {
   // get the username that is logged in
   const currentUser =  req.params.usernameId;
 
-  PM.find({ 'senderUsernameId': currentUser }, (err, pm) => {
+  PM.find({ 'senderUsernameId': currentUser, logicalDelete: false }, (err, pm) => {
     if (err) {
       console.log(err);
       return res.status(500).send({ error: 'There was an error processing your request' });

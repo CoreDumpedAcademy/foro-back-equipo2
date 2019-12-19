@@ -24,6 +24,10 @@ const PostSchema = mongoose.Schema({
   editDate: {
     type: Date,
   },
+  logicalDelete: {
+    type: Boolean,
+    default: false,
+  }
 });
 
 module.exports = mongoose.model('Post', PostSchema);

@@ -21,6 +21,10 @@ const PMSchema = mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
+  logicalDelete: {
+    type: Boolean,
+    default: false,
+  }
 });
 
 module.exports = mongoose.model('PM', PMSchema);

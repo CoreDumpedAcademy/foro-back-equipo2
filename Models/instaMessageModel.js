@@ -16,7 +16,11 @@ const instaMessageModel = mongoose.Schema({
     creationDate: {
         type: Date,
         default: Date.now(),
-    }
+    },
+    logicalDelete: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 module.exports = mongoose.model('instaMessage', instaMessageModel);

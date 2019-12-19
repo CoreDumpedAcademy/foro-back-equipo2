@@ -23,7 +23,7 @@ const UserSchema = mongoose.Schema({
   },
   admin: {
     type: Number,
-    // 0 if regular user or 1 for admin access
+    default: 0,
   },
 });
 
