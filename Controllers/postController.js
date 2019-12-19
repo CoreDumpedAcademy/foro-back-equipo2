@@ -36,7 +36,7 @@ function getUserPosts(req, res) {
   query.skip = size * (pageNo - 1);
   query.limit = size;
 
-  Post.find( { 'usernameId':usernameId }, {}, query, (err, posts) => {
+  Post.find( { 'usernameId':usernameId, logicalDelete: { $ne: true } }, {}, query, (err, posts) => {
     if (err) {
       console.log(err);
       return res.status(500).send({ error: 'There was an error processing your request' });
@@ -57,7 +57,7 @@ function getTopicPosts(req, res) {
   query.skip = size * (pageNo - 1);
   query.limit = size;
 
-  Post.find({ 'topicId':topicId }, {}, query, (err, posts) => {
+  Post.find({ 'topicId':topicId, logicalDelete: { $ne: true } }, {}, query, (err, posts) => {
     if (err) {
       console.log(err);
       return res.status(500).send({ error: 'There was an error processing your request' });
@@ -73,8 +73,6 @@ function deletePost(req, res) {
   Post.findByIdAndUpdate(postId, { logicalDelete: true }, (err, post) => {
     if (err) return res.status(500).send({ error: err });
     if (!post) return res.status(404).send({ error: 'Post not found' });
-
-    if (deleteService.deleteAllComments(postId) == false) return res.status(500).send({ message: 'Internal error'});
 
     return res.status(200).send({ message: 'Post Deleted', post });
   });
@@ -98,9 +96,9 @@ function postFinder(req, res) {
 
   Post.find( {
     $or:[
-      { 'content': new RegExp('.*' + data, 'i') },
-      { 'title': new RegExp('.*' + data, 'i') },
-      { 'username': new RegExp('^' + data, 'i') },
+      { 'content': new RegExp('.*' + data, 'i'), logicalDelete: { $ne: true } },
+      { 'title': new RegExp('.*' + data, 'i'), logicalDelete: { $ne: true } },
+      { 'username': new RegExp('^' + data, 'i'), logicalDelete: { $ne: true } },
     ],
   }, (err , result) => {
     if (result.length == 0) return res.status(404).send({ message: 'Post not found' });

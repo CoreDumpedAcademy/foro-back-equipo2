@@ -11,7 +11,7 @@ function getTopics(req, res) {
   query.skip = size * (pageNo - 1);
   query.limit = size;
 
-  Topic.find({ }, { }, query, (err, topics) => {
+  Topic.find({ logicalDelete: { $ne: true } }, { }, query, (err, topics) => {
     if (err) return res.status(500).send({ error: 'There was an error processing your request' });
 
     return res.status(200).send({ topics });
@@ -34,7 +34,7 @@ function getById(req, res) {
 
   if (!topicId) return res.status(400).send({ message: 'topicId needed' });
 
-  Topic.findById(topicId, { logicalDelete: false }, (err, topic) => {
+  Topic.findById(topicId, (err, topic) => {
     if (err) return res.status(500).send({ error: 'There was an error processing your request' });
     if (!topic) return res.status(404).send({ error: 'Topic not found' });
 
@@ -46,11 +46,9 @@ function deleteById(req, res) { // WIP Proteger para admin
   const topicId = req.params['topicId'];
   if (!topicId) return res.status(400).send({ message: 'topicId needed' });
 
-  Topic.findByIdAndUpdate(topicId, { logicalDelete: false }, (err, topic) => {
+  Topic.findByIdAndUpdate(topicId, { logicalDelete: true }, (err, topic) => {
     if (err) return res.status(500).send({ error: 'There was an error processing your request' });
     if (!topic) return res.status(404).send({ error: 'Topic not found' });
-
-    if (deleteService.deleteAllPosts(topicId) == false) return res.status(500).send( { message: 'Internal error' });
 
     return res.status(200).send({ topic });
   });
@@ -63,7 +61,7 @@ function editById(req, res) {
 
   if (!topicId) return res.status(400).send({ message: 'topicId needed' });
 
-  Topic.findByIdAndUpdate(topicId, patch, { logicalDelete: false }, (err, topic) => {
+  Topic.findByIdAndUpdate(topicId, patch, (err, topic) => {
     if (err) return res.status(500).send({ error: 'There was an error processing your request' });
     if (!topic) return res.status(404).send({ error: 'Topic not found' });
 

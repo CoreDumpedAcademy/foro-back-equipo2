@@ -14,7 +14,7 @@ function createComment(req, res) {
 function getComment(req, res) {
   const { commentId } = req.params;
 
-  Comment.findById(commentId, {logicalDelete: false}, (err, comment) => {
+  Comment.findById(commentId, (err, comment) => {
     if (err) {
       console.log(err);
       return res.status(500).send({ error: 'There was an error processing your request' });
@@ -35,7 +35,7 @@ function getUserComments(req, res) {
   query.skip = size * (pageNo - 1);
   query.limit = size;
 
-  Comment.find({ 'usernameId':usernameId }, {}, query, (err, comments) => {
+  Comment.find({ 'usernameId':usernameId, logicalDelete: { $ne: true } }, {}, query, (err, comments) => {
     if (err) {
       console.log(err);
       return res.status(500).send({ error: 'There was an error processing your request' });
@@ -56,7 +56,7 @@ function getPostComments(req, res) {
   query.skip = size * (pageNo - 1);
   query.limit = size;
 
-  Comment.find({ 'postId':postId }, {}, query, (err, comments) => {
+  Comment.find({ 'postId':postId, logicalDelete: { $ne: true } }, { }, query, (err, comments) => {
     if (err) {
       console.log(err);
       return res.status(500).send({ error: 'There was an error processing your request' });
