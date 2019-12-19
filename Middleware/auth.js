@@ -17,9 +17,11 @@ function isAuth(req, res, next){
 }
 
 function checkAdmin(req, res, next){
+  if (!req.body.usernameId) return res.status(401).send({ message: 'Unauthorised'})
+
   User.findById(req.body.usernameId, (err, user) => {
       if (err) return res.status(404).send({ message: 'User not found' });
-      if (user.admin == null || user.admin == undefined || user.admin == 0) return res.status(403).send({ message: 'Access forbiden' });
+      if (user.admin == 0) return res.status(403).send({ message: 'Access forbiden' });
      
       next();
   });

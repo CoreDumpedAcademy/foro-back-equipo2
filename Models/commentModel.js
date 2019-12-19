@@ -36,6 +36,10 @@ const CommentSchema = mongoose.Schema({
     type: String,
     require: true,
   },
+  logicalDelete: {
+    type: Boolean,
+    default: false,
+  }
 });
 
 module.exports = mongoose.model('Comment', CommentSchema);

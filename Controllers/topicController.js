@@ -1,4 +1,5 @@
 const Topic = require('../Models/topicModel');
+const deleteService = require('../Services/deleteService');
 
 function getTopics(req, res) {
   var pageNo = parseInt(req.query.pageNo);
@@ -10,7 +11,7 @@ function getTopics(req, res) {
   query.skip = size * (pageNo - 1);
   query.limit = size;
 
-  Topic.find({ }, { }, query, (err, topics) => {
+  Topic.find({ logicalDelete: { $ne: true } }, { }, query, (err, topics) => {
     if (err) return res.status(500).send({ error: 'There was an error processing your request' });
 
     return res.status(200).send({ topics });
@@ -45,7 +46,7 @@ function deleteById(req, res) { // WIP Proteger para admin
   const topicId = req.params['topicId'];
   if (!topicId) return res.status(400).send({ message: 'topicId needed' });
 
-  Topic.findByIdAndDelete(topicId, (err, topic) => {
+  Topic.findByIdAndUpdate(topicId, { logicalDelete: true }, (err, topic) => {
     if (err) return res.status(500).send({ error: 'There was an error processing your request' });
     if (!topic) return res.status(404).send({ error: 'Topic not found' });
 

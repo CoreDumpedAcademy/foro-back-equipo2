@@ -20,6 +20,10 @@ const TopicSchema = mongoose.Schema({
   editDate: {
     type: Date,
   },
+  logicalDelete: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 module.exports = mongoose.model('Topic', TopicSchema);

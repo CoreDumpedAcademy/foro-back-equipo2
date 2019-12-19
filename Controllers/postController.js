@@ -1,4 +1,5 @@
 const Post = require('../Models/postModel');
+const deleteService = require('../Services/deleteService');
 
 function createPost(req, res) {
   if (!req.body.content) return res.status(400).send({ error: 'Content needed' });
@@ -35,7 +36,7 @@ function getUserPosts(req, res) {
   query.skip = size * (pageNo - 1);
   query.limit = size;
 
-  Post.find( { 'usernameId':usernameId }, {}, query, (err, posts) => {
+  Post.find( { 'usernameId':usernameId, logicalDelete: { $ne: true } }, {}, query, (err, posts) => {
     if (err) {
       console.log(err);
       return res.status(500).send({ error: 'There was an error processing your request' });
@@ -56,7 +57,7 @@ function getTopicPosts(req, res) {
   query.skip = size * (pageNo - 1);
   query.limit = size;
 
-  Post.find({ 'topicId':topicId }, {}, query, (err, posts) => {
+  Post.find({ 'topicId':topicId, logicalDelete: { $ne: true } }, {}, query, (err, posts) => {
     if (err) {
       console.log(err);
       return res.status(500).send({ error: 'There was an error processing your request' });
@@ -69,7 +70,7 @@ function getTopicPosts(req, res) {
 function deletePost(req, res) {
   const { postId } = req.params;
 
-  Post.findByIdAndDelete(postId, (err, post) => {
+  Post.findByIdAndUpdate(postId, { logicalDelete: true }, (err, post) => {
     if (err) return res.status(500).send({ error: err });
     if (!post) return res.status(404).send({ error: 'Post not found' });
 
@@ -95,9 +96,9 @@ function postFinder(req, res) {
 
   Post.find( {
     $or:[
-      { 'content': new RegExp('.*' + data, 'i') },
-      { 'title': new RegExp('.*' + data, 'i') },
-      { 'username': new RegExp('^' + data, 'i') },
+      { 'content': new RegExp('.*' + data, 'i'), logicalDelete: { $ne: true } },
+      { 'title': new RegExp('.*' + data, 'i'), logicalDelete: { $ne: true } },
+      { 'username': new RegExp('^' + data, 'i'), logicalDelete: { $ne: true } },
     ],
   }, (err , result) => {
     if (result.length == 0) return res.status(404).send({ message: 'Post not found' });
