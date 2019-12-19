@@ -2,7 +2,7 @@ const InstaMessage = require('../Models/instaMessageModel');
 
 function saveInstaMessage(req, res) {
     if (!req.body.receiverUsernameId) return res.status(400).send({ error: 'Recipient needed' });
-    if (!req.body.usernameId) return res.status(400).send({ error: 'Title needed' });
+    if (!req.body.senderUsernameId) return res.status(400).send({ error: 'Title needed' });
     if (!req.body.content) return res.status(400).send({ error: 'Content needed' });
   
     const instaMessage = new InstaMessage(req.body);

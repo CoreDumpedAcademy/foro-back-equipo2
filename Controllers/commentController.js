@@ -30,16 +30,12 @@ function getUserComments(req, res) {
   var size = parseInt(req.query.size);
   var query = {};
 
-<<<<<<< HEAD
-  Comment.find({ 'usernameId':usernameId, logicalDelete: false }, (err, comments) => {
-=======
   if (pageNo < 0 || pageNo === 0) return res.send({ err: "Invalid page number" }); 
 
   query.skip = size * (pageNo - 1);
   query.limit = size;
 
   Comment.find({ 'usernameId':usernameId }, {}, query, (err, comments) => {
->>>>>>> b2a18ac298a9d699ba864fef59e52243e097dbe2
     if (err) {
       console.log(err);
       return res.status(500).send({ error: 'There was an error processing your request' });
@@ -60,11 +56,7 @@ function getPostComments(req, res) {
   query.skip = size * (pageNo - 1);
   query.limit = size;
 
-<<<<<<< HEAD
-  Comment.find({ 'postId':postId, logicalDelete: false }, (err, comments) => {
-=======
   Comment.find({ 'postId':postId }, {}, query, (err, comments) => {
->>>>>>> b2a18ac298a9d699ba864fef59e52243e097dbe2
     if (err) {
       console.log(err);
       return res.status(500).send({ error: 'There was an error processing your request' });
