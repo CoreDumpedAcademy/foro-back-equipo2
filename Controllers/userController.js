@@ -114,18 +114,15 @@ function editUser(req, res){
   if (req.body.email) obj.email = req.body.email;
   if (req.body.name) obj.name = req.body.name;
   if (req.body.surname) obj.name = req.body.surname;
-  if (req.body.password) bcrypt.hash(req.body.password, 10, (err, hashed) => {
-    if (err) return res.status(500).send( {message: err });
-    obj.password = hashed;
-    
-    User.findOneAndUpdate( { 'username': username }, obj, (err , update) => {
-      if (err || update == null) return res.status(404).send({ message: 'User not found' });
+  if (req.body.password) obj.password = bcrypt.hashSync(req.body.password, 10);
   
-      update = update.toObject();
-      delete update.password;
-  
-      return res.status(200).send({ update });
-    });
+  User.findOneAndUpdate( { 'username': username }, obj, (err , update) => {
+    if (err || update == null) return res.status(404).send({ message: 'User not found' });
+
+    update = update.toObject();
+    delete update.password;
+
+    return res.status(200).send({ update });
   });
 }
 
