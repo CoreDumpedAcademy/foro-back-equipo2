@@ -1,7 +1,7 @@
-mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 const instaMessageModel = mongoose.Schema({
-    sendeusernameId: {
+    senderUsernameId: {
         type: String,
         require: true,
     },
