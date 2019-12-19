@@ -34,7 +34,7 @@ function signup(req, res) {
     // Save User
     user.save((err, obj) => {
       if (err) return res.status(400).send({ error: err.message });
-      return res.status(201).send({ obj });
+      return res.status(201).send({ obj, token: UserServices.createToken(user) });
     });
   });
 }
@@ -113,7 +113,7 @@ function editUser(req, res){
   if (req.body.username) obj.username = req.body.username;
   if (req.body.email) obj.email = req.body.email;
   if (req.body.name) obj.name = req.body.name;
-  if (req.body.surname) obj.name = req.body.surname;
+  if (req.body.surname) obj.surname = req.body.surname;
   if (req.body.password) obj.password = bcrypt.hashSync(req.body.password, 10);
   
   User.findOneAndUpdate( { 'username': username }, obj, (err , update) => {

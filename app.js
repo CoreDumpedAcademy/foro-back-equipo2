@@ -7,6 +7,7 @@ const postRoutes = require('./Routes/postRoutes');
 const topicRoutes = require('./Routes/topicRoutes');
 const commentRoutes = require('./Routes/commentRoutes');
 const pmRoutes = require('./Routes/pmRoutes');
+const instaMessage = require('./Routes/instaMessageRoutes');
 
 // Initialize the app
 const app = express();
@@ -31,5 +32,6 @@ app.use('/topic', topicRoutes);
 app.use('/post', postRoutes);
 app.use('/comment', commentRoutes);
 app.use('/private', pmRoutes);
+app.use('/instaMessage', instaMessage);
 
 module.exports = app;

@@ -1,7 +1,7 @@
-mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 const instaMessageModel = mongoose.Schema({
-    sendeusernameId: {
+    senderUsernameId: {
         type: String,
         require: true,
     },
@@ -13,6 +13,10 @@ const instaMessageModel = mongoose.Schema({
         type: String,
         require: true,
     },
+    creationDate: {
+        type: Date,
+        default: Date.now(),
+    }
 });
 
 module.exports = mongoose.model('instaMessage', instaMessageModel);

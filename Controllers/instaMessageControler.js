@@ -26,8 +26,22 @@ function saveInstaMessage(req, res) {
     });
   }
 
+  function getUserInstaMessagesSent(req, res) {
+    // get the username that is logged in
+    const currentUser =  req.params.usernameId;
+  
+    InstaMessage.find({ 'senderUsernameId': currentUser }, (err, instaMessage) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).send({ error: 'There was an error processing your request' });
+      }
+      if (!instaMessage) return res.status(404).send({ error: 'This user hasn´t sent any insta message.' });
+      return res.status(200).send({ instaMessage });
+    });
+  }
 
 module.exports = {
     saveInstaMessage,
     getUserInstantMessages,
+    getUserInstaMessagesSent,
 };
