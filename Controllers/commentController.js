@@ -26,8 +26,20 @@ function getComment(req, res) {
 
 function getUserComments(req, res) {
   const { usernameId } = req.params;
+  var pageNo = parseInt(req.query.pageNo);
+  var size = parseInt(req.query.size);
+  var query = {};
 
+<<<<<<< HEAD
   Comment.find({ 'usernameId':usernameId, logicalDelete: false }, (err, comments) => {
+=======
+  if (pageNo < 0 || pageNo === 0) return res.send({ err: "Invalid page number" }); 
+
+  query.skip = size * (pageNo - 1);
+  query.limit = size;
+
+  Comment.find({ 'usernameId':usernameId }, {}, query, (err, comments) => {
+>>>>>>> b2a18ac298a9d699ba864fef59e52243e097dbe2
     if (err) {
       console.log(err);
       return res.status(500).send({ error: 'There was an error processing your request' });
@@ -39,8 +51,20 @@ function getUserComments(req, res) {
 
 function getPostComments(req, res) {
   const  { postId } = req.params;
+  var pageNo = parseInt(req.query.pageNo);
+  var size = parseInt(req.query.size);
+  var query = {};
 
+  if (pageNo < 0 || pageNo === 0) return res.send({ err: "Invalid page number" }); 
+
+  query.skip = size * (pageNo - 1);
+  query.limit = size;
+
+<<<<<<< HEAD
   Comment.find({ 'postId':postId, logicalDelete: false }, (err, comments) => {
+=======
+  Comment.find({ 'postId':postId }, {}, query, (err, comments) => {
+>>>>>>> b2a18ac298a9d699ba864fef59e52243e097dbe2
     if (err) {
       console.log(err);
       return res.status(500).send({ error: 'There was an error processing your request' });

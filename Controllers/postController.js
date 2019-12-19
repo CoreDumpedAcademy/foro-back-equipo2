@@ -27,8 +27,16 @@ function getPost(req, res) {
 
 function getUserPosts(req, res) {
   const { usernameId } = req.params;
+  var pageNo = parseInt(req.query.pageNo);
+  var size = parseInt(req.query.size);
+  var query = {};
 
-  Post.find( { 'usernameId':usernameId }, (err, posts) => {
+  if (pageNo < 0 || pageNo === 0) return res.send({ err: "Invalid page number" }); 
+
+  query.skip = size * (pageNo - 1);
+  query.limit = size;
+
+  Post.find( { 'usernameId':usernameId }, {}, query, (err, posts) => {
     if (err) {
       console.log(err);
       return res.status(500).send({ error: 'There was an error processing your request' });
@@ -40,8 +48,16 @@ function getUserPosts(req, res) {
 
 function getTopicPosts(req, res) {
   const { topicId } = req.params;
+  var pageNo = parseInt(req.query.pageNo);
+  var size = parseInt(req.query.size);
+  var query = {};
 
-  Post.find({ 'topicId':topicId }, (err, posts) => {
+  if (pageNo < 0 || pageNo === 0) return res.send({ err: "Invalid page number" }); 
+
+  query.skip = size * (pageNo - 1);
+  query.limit = size;
+
+  Post.find({ 'topicId':topicId }, {}, query, (err, posts) => {
     if (err) {
       console.log(err);
       return res.status(500).send({ error: 'There was an error processing your request' });
