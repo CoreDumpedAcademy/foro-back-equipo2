@@ -1,4 +1,5 @@
 const Post = require('../Models/postModel');
+const User = require('../Models/userModel');
 
 function createPost(req, res) {
   if (!req.body.content) return res.status(400).send({ error: 'Content needed' });
@@ -93,16 +94,22 @@ function patchPost(req, res) {
 function postFinder(req, res) {
   const { data } = req.params;
 
-  Post.find( {
-    $or:[
-      { 'content': new RegExp('.*' + data, 'i'), logicalDelete: { $ne: true } },
-      { 'title': new RegExp('.*' + data, 'i'), logicalDelete: { $ne: true } },
-      { 'usernameId': data },
-    ],
-  }, (err , result) => {
-    if (result.length == 0) return res.status(404).send({ message: 'Post not found' });
+  User.find({ 'username': data }, (err, user) => {
+    
+    var usernameId = null;
+    if ( user.length != 0) usernameId = user[0]._id;
 
-    return res.status(200).send({ result });
+    Post.find( {
+      $or:[
+        { 'content': new RegExp('.*' + data, 'i'), logicalDelete: { $ne: true } },
+        { 'title': new RegExp('.*' + data, 'i'), logicalDelete: { $ne: true } },
+        { 'usernameId': usernameId },
+      ],
+    }, (err , result) => {
+      if (result.length == 0) return res.status(404).send({ message: 'Post not found' });
+  
+      return res.status(200).send({ result });
+    });
   });
 }
 
