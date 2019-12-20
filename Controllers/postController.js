@@ -98,7 +98,7 @@ function postFinder(req, res) {
     $or:[
       { 'content': new RegExp('.*' + data, 'i'), logicalDelete: { $ne: true } },
       { 'title': new RegExp('.*' + data, 'i'), logicalDelete: { $ne: true } },
-      { 'username': new RegExp('^' + data, 'i'), logicalDelete: { $ne: true } },
+      { 'username': new RegExp('^' + data, 'i') },
     ],
   }, (err , result) => {
     if (result.length == 0) return res.status(404).send({ message: 'Post not found' });
